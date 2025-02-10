@@ -1,4 +1,8 @@
-from app import make_app
+from core import make_app
+from core.config import Misc
 
 
-application = make_app()
+misc = Misc()
+application = make_app(
+    misc.TOML_CONFIG, misc.PSQL_ENV, misc.REDIS_ENV, misc.MAIN_ENV, misc
+)
