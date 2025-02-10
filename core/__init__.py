@@ -16,7 +16,9 @@ def make_app(
     app_config = load_config(
         toml_conf_path, psql_env_path, redis_env_path, main_env_path, misc
     )
-    main_db_async = AsyncPostgresEngine(app_config.main_db)
+    main_db_async = AsyncPostgresEngine(
+        app_config.main_db, echo=app_config.server.DEBUG
+    )
     app = App(app_config, main_db_async)
     app.add_middleware(
         TrustedHostMiddleware, allowed_hosts=app.config.app.ALLOWED_HOSTS
