@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 
 from core.config import Misc
 from core.settings.db import PostgresConfig
-from db.postgres.db_sync import SyncPgEngine
+from db.engine.postgres.db_sync import SyncPgEngine
 
 load_dotenv('../.envs/psql.env')
 

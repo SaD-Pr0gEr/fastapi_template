@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 from core.config import Config
-from db.postgres.db_async import AsyncPostgresEngine
+from db.engine.postgres.db_async import AsyncPostgresEngine
 
 
 class App(FastAPI):

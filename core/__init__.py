@@ -6,7 +6,7 @@ from core.abstract import App
 from core.apps import register_app_routes
 from core.config import load_config
 from core.settings.server import Config, Misc
-from db.postgres.db_async import AsyncPostgresEngine
+from db.engine.postgres.db_async import AsyncPostgresEngine
 
 
 def make_app(
