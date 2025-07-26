@@ -13,46 +13,53 @@ class Repository:
     def __init__(self, session: AsyncSession | Session):
         self.session = session
 
-    def get_random_model_stmt(self, **filter_by) -> Select:
+    @classmethod
+    def get_random_model_stmt(cls, **filter_by) -> Select:
         return (
-            select(self.model)
+            select(cls.model)
             .filter_by(**filter_by)
             .order_by(random())
             .limit(1)
         )
 
-    def add_one_stmt(self, data: dict) -> ReturningInsert:
-        stmt = insert(self.model).values(**data).returning(self.model)
+    @classmethod
+    def add_one_stmt(cls, data: dict) -> ReturningInsert:
+        stmt = insert(cls.model).values(**data).returning(cls.model)
         return stmt
 
-    def edit_one_stmt(self, id: int, data: dict) -> ReturningUpdate:
+    @classmethod
+    def edit_one_stmt(cls, id: int, data: dict) -> ReturningUpdate:
         stmt = (
-            update(self.model)
+            update(cls.model)
             .values(**data)
             .filter_by(id=id)
-            .returning(self.model)
+            .returning(cls.model)
         )
         return stmt
 
-    def edit_by_filter_stmt(self, filters: dict, data: dict) -> Update:
+    @classmethod
+    def edit_by_filter_stmt(cls, filters: dict, data: dict) -> Update:
         stmt = (
-            update(self.model)
+            update(cls.model)
             .values(**data)
             .filter_by(**filters)
-            .returning(self.model)
+            .returning(cls.model)
         )
         return stmt
 
-    def get_all_stmt(self) -> Select:
-        stmt = select(self.model)
+    @classmethod
+    def get_all_stmt(cls) -> Select:
+        stmt = select(cls.model)
         return stmt
 
-    def filter_by_stmt(self, **filter_by) -> Select:
-        stmt = select(self.model).filter_by(**filter_by)
+    @classmethod
+    def filter_by_stmt(cls, **filter_by) -> Select:
+        stmt = select(cls.model).filter_by(**filter_by)
         return stmt
 
-    def delete_stmt(self, **filter_by) -> Delete:
-        stmt = delete(self.model).filter_by(**filter_by)
+    @classmethod
+    def delete_stmt(cls, **filter_by) -> Delete:
+        stmt = delete(cls.model).filter_by(**filter_by)
         return stmt
 
     def add_one(self, data: dict[str, int | float | str | bool | None | dict]):
