@@ -24,7 +24,7 @@ poetry shell
 
 ## Setting up environment vars
 * Rename `example.envs` to `.envs`
-* Remove `example` from every file name in `example.envs` (They should look like this `.envs/.env` etc.)
+* Remove `example` from every file name in `example.envs` (They should look like `.envs/.env` etc.)
 * Rename all example values to actual values and put other values(add these values to config class)
 
 ## Setting up config
@@ -33,8 +33,7 @@ poetry shell
 
 ## Alembic
 
-* App models put in app model file, and import this file to alembic's 
-`env.py` file(before BASE)
+* App models files put in `db/models` package and import to `db/__init__.py` like `from . import example_db_file`
 * All models must inherit from base Model class in `db/models/base/Model`
 * Apply migrates with command `alembic upgrade head`
 
