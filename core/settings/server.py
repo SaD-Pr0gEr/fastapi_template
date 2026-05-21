@@ -22,6 +22,7 @@ class AppConfig(BaseSettings):
 class UrlNames(BaseSettings):
     CORE_GET: str = "core_get"
     CORE_AUTH_EXP: str = "core_auth_exp"
+    CORE_EXCEPTION_EXP: str = "core_exception_exp"
 
 
 @dataclass

@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from fastapi.exceptions import RequestValidationError
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 
@@ -9,6 +10,11 @@ from core.config import load_config
 from core.middleware.request_id import request_identify_middleware
 from core.settings.server import Config, Misc
 from db.engine.postgres.db_async import AsyncPostgresEngine
+from utils.exceptions import (
+    AbstractJsonException,
+    custom_json_exception_handler,
+    rewrite_builtin_validation_exception_handler,
+)
 from utils.logs import setup_logging
 
 
@@ -27,6 +33,12 @@ def make_app(
         app_config.main_db, echo=app_config.server.DEBUG
     )
     app = App(app_config, main_db_async)
+    app.add_exception_handler(
+        AbstractJsonException, custom_json_exception_handler
+    )
+    app.add_exception_handler(
+        RequestValidationError, rewrite_builtin_validation_exception_handler
+    )
     app.add_middleware(
         BaseHTTPMiddleware, dispatch=request_identify_middleware
     )
